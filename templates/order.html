@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>管理员</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+  <!-- Font Awesome -->
+ <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/offline/font-awesome-4.4.0/css/font-awesome.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/offline/ionicons-2.0.1/css/ionicons.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/AdminLTE.min.css') }}">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/skins/skin-blue.min.css') }}">
+
+  <style type="text/css">
+.theme-popover-mask {
+  z-index: 9998;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  opacity:0.4;
+  filter:alpha(opacity=40);
+  display:none
+}
+
+.theme-popover {
+  z-index:9999;
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:580px;
+  height:310px;
+  margin:-180px 0 0 -330px;
+  border-radius:5px;
+  border:solid 2px #666;
+  background-color:#fff;
+  display:none;
+  box-shadow: 0 0 10px #666;
+}
+.theme-poptit {
+  border-bottom:1px solid #ddd;
+  padding:8px;
+  position: relative;
+}
+
+.theme-poptit>h2{
+text-align:center;
+}
+</style>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="{{ url_for('admin') }}" class="logo">
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg">管理员</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">切换导航</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="{{ url_for('logout') }}" class="dropdown-toggle">
+              <!-- The user image in the navbar-->
+              <img src="{{ url_for('static', filename='dist/img/user8-128x128.jpg') }}" class="user-image" alt="User Image">
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <span class="hidden-xs">退出</span>
+            </a>
+          
+          </li>
+		 </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- 管理员信息 -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="{{ url_for('static', filename='dist/img/user8-128x128.jpg') }}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{{ data.username }}</p>
+          <!-- Status -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+
+      <!-- 搜索框 -->
+      <form action="{{ url_for('admin_search') }}" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="请输入菜名">
+              <span class="input-group-btn">
+                <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
+      <!-- 左边按钮 -->
+       <ul class="sidebar-menu">
+        
+        
+       <li class="treeview"> <a href="#"><!-- <i class="fa fa-link"></i> --> <span>菜品管理</span> <i class="fa fa-angle-left pull-right"></i> </a>
+          <ul class="treeview-menu">
+                <li><a href="{{ url_for('admin') }}">查看全部</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='特色菜') }}">特色菜</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='精品凉菜') }}">精品凉菜</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='家常小炒') }}">家常小炒</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='鱼虾类') }}">鱼虾类</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='干锅系列') }}">干锅系列</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='主食') }}">主食</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='酒类') }}">酒类</a></li>
+                <li><a href="{{ url_for('admin_subclass', subclass='饮料') }}">饮料</a></li>
+             </ul>
+        </li>
+        <li class="treeview"> <a href="#"><!-- <i class="fa fa-link"></i> --> <span>查看订单</span> </a>
+        
+        </li>
+  
+    
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+		<a href="{{ url_for('add_dish') }}"><button class="btn btn-primary ">添加新菜</button></a>
+    </section> -->
+
+    <!-- Main content -->
+    <section class="content">
+     <link rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.css') }}">
+
+        <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ data.title }}</h3>
+              <div class="box-tools pull-right">
+              	<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> </button>    
+	             </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>订单号</th>
+                  <th>是否完成</th>
+                  <th>创建时间</th>     
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in data.orders %}
+                <tr>
+                  <td>{{ order.orderNo }}</td>
+                  <td>{% if order.isComplete %} 是 {% else %} 否 {% endif %}</td>
+                  <td>{{ order.createTime }}</td>
+                  <td>
+                    <span><a href="{{ url_for('order_detail', orderNo=order.orderNo) }}"><i class="fa fa-search">查看</i></a></span>
+                    <span><a href="{{ url_for('complete_order', orderNo=order.orderNo) }}"><i class="fa fa-edit">完成订单</i></a></span>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              </table>
+            </div>
+          </div>
+
+
+<script>
+$('#example').DataTable({
+    "padding": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "select": true,
+    "order": [[1,"desc"]]
+});
+
+
+function delete_class(id)
+{
+    if(confirm("确定删除该菜品信息吗？"))
+    {
+        var url = "{{ url_for('delete_dish' ,ID=id) }}"+id;
+        $.post(url)
+            .fail(function(data){
+                alert("删除失败！");
+            }).done(function(data){
+                alert("删除成功！");
+                location.href = "{{ url_for('admin') }}";
+            });
+    }
+}
+
+</script>
+
+
+
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<!-- jQuery 2.2.0 -->
+
+
+<script src="{{ url_for('static', filename='plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ url_for('static', filename='dist/js/app.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+<!-- FastClick -->
+<script src="{{ url_for('static', filename='plugins/fastclick/fastclick.js') }}"></script>
+
+<script>
+    $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+
+
+</body>
+</html>
